@@ -11,6 +11,9 @@
 #include <tuple>
 #include <chrono>
 #include <bitset>
+#include <locale>
+#include <codecvt>
+#include <cstdio>
 
 using namespace std;
 
@@ -170,8 +173,8 @@ int main(void)
 	cl_int err4 = clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &global_size, &local_size, 0, NULL, &kernel_event);
 
     // Print kernel exit status
-        if(verbose){
-	printf("\nKernel check: %i \n",err4);
+    if(verbose){
+        printf("\nKernel check: %i \n",err4);
     }
 
 	// Read output from kernel
@@ -188,6 +191,9 @@ int main(void)
         std::cerr << "Error opening output file." << std::endl;
         return 1;
     }
+
+    // UTF-8 Encoding
+    //outputFile << "\xEF\xBB\xBF"; // UTF-8 BOM
 
     // Write the contents of the input buffer to the output file
     outputFile.write(output_data, Size);
