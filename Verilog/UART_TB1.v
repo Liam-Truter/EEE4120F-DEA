@@ -23,6 +23,7 @@ module UART_TB1 ();
     reg improved_encrypt_enable = 0;
 	reg last_data = 0;
   reg [7:0] r_TX_Byte = 8'h00;
+  reg [31:0] start_time, end_time; // Variables to store start and end times
   wire [7:0] w_RX_Byte;
   wire[7:0] dout;
     wire led_complete;
@@ -75,18 +76,19 @@ module UART_TB1 ();
         xor_enable = 0;
         improved_encrypt_enable = 0;
     
-        #100 din = 8'h3F;
-        #100 key = 8'b10101000;
+        #100 din = 8'h61; // was 8'h3F
+        #100 key = 8'b10000000; // was 10101000
         
 		$display("TESTING SIMPLER CIPHER");
 		#100 xor_enable = 1;
-        #100 shift = 7;
+        #100 shift = 0; // was 7
 		#100 last_data = 1;
 		#100 xor_enable = 0;
 	
       // Tell UART to send a command (exercise TX)
       @(posedge r_Clock);
       @(posedge r_Clock);
+	  start_time = $time; // Capture start time
       r_TX_DV   <= 1'b1;
       r_TX_Byte <= dout;
       @(posedge r_Clock);
@@ -94,11 +96,15 @@ module UART_TB1 ();
 	  #100;
       // Check that the correct command was received
       @(posedge w_RX_DV);
-      if (w_RX_Byte == 8'h6B)
+	  end_time = $time; // Capture end time
+      if (w_RX_Byte == 8'hE1) // was 6B
         $display("Test Passed - Correct Byte Received");
       else
         $display("Test Failed - Incorrect Byte Received");
+		$display("Cipher input = %b", din);
 		$display("Received Byte = %b", w_RX_Byte);
+		// Calculate and display the total transfer and receive time
+		$display("Total transfer and receive time: %0d ns", end_time - start_time);
       $finish();
     end
   
