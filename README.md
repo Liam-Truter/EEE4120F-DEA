@@ -1,7 +1,7 @@
 # EEE4120F-DEA
 Multiple implementations of an encryption algorithm including a golden measure in Python, an FPGA digital accelerator in Verilog, and a GPU digital accelerator in OpenCL and C++.
 
-## [Golden Measure](Golden\ Measure)
+## [Golden Measure](Golden Measure)
 
 ## [Verilog](Verilog)
 
