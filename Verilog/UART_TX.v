@@ -1,4 +1,5 @@
-
+// Author: Russell Merrick
+//https://www.edaplayground.com/x/Pgf
 // This file contains the UART Transmitter.  This transmitter is able
 // to transmit 8 bits of serial data, one start bit, one stop bit,
 // and no parity bit.  When transmit is complete o_Tx_done will be
