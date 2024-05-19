@@ -1,4 +1,5 @@
 //Author: Liam Truter
+//Modified from code provided by S. Winberg for EEE4120F
 
 #include<stdio.h>
 #include<CL/cl.h>
